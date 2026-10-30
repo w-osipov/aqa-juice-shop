@@ -23,3 +23,7 @@ def test_successful_registration(open_registration_page: Page):
     page.locator("#registerButton").click()
     
     page.wait_for_timeout(3000)
+
+def test_github_ci_check(page: Page):
+    page.goto("https://github.com")
+    assert "GitHub" in page.title()
