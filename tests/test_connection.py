@@ -27,6 +27,19 @@ def test_successful_registration(open_registration_page: Page):
     expect(page.get_by_text("Registration completed successfully")).to_be_visible()
     expect(page).to_have_url("http://localhost:3000/#/login")
 
-def test_github_ci_check(page: Page):
-    page.goto("https://github.com")
-    assert "GitHub" in page.title()
+def test_registration_password_mismatch(open_registration_page: Page):
+    page = open_registration_page
+
+    # 1. Email и два РАЗНЫХ пароля
+    page.locator("#emailControl").fill(f"tester_node_qa+{uuid.uuid4().hex[:8]}@gmail.com")
+    page.locator("#passwordControl").fill("Password123!")
+    page.locator("#repeatPasswordControl").fill("Password456@")
+    
+    # 2 Уводим фокус, чтобы форма посчитала поле заполненным
+    page.locator("#repeatPasswordControl").blur()
+    
+    # 3. Форма подсветила ошибку
+    expect(page.get_by_text("Passwords do not match")).to_be_visible()
+
+    # 4. Кнопка заблокирована
+    expect(page.get_by_role("button", name="Button to complete the registration")).to_be_disabled()
