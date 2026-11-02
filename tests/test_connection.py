@@ -10,7 +10,7 @@ def test_successful_registration(open_registration_page: Page):
     page.locator("#emailControl").fill(f"tester_node_qa+{uuid.uuid4().hex[:8]}@gmail.com")
     
     # 2. Сначала работаем с выпадающим списком (чтобы фокус не сбивал пароли)
-    page.get_by_role("combobox", name="Selection list for the security question").click()
+    page.get_by_role("combobox", name="Selection list for the security question").click(force=True)
     page.get_by_role("option").first.click()
 
     # 3. Заполняем ответ на вопрос
