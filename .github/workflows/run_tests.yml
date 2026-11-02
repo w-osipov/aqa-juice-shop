@@ -31,11 +31,23 @@ jobs:
         cd juice-shop && npm install --include-workspace-root
 
     - name: Start Juice Shop
-      run: docker run -d -p 3000:3000 bkimminich/juice-shop
-
-    - name: Wait for app to be ready
       run: |
-        timeout 60 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 2; done'
+        docker rm -f juice-shop 2>/dev/null || true
+        docker run -d --name juice-shop -p 3000:3000 bkimminich/juice-shop
+
+    - name: Wait for Juice Shop to be ready
+      run: |
+        for i in $(seq 1 60); do
+          if curl -fsS -o /dev/null http://localhost:3000/; then
+            echo "Juice Shop is ready"
+            exit 0
+          fi
+          sleep 2
+        done
+        echo "--- Container logs ---"
+        docker logs juice-shop || true
+        exit 1
+
 
     - name: Run tests in CI
       run: pytest tests/ -v --screenshot only-on-failure --output test-results
