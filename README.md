@@ -1,3 +1,5 @@
+![Tests](https://github.com/w-osipov/aqa_juice_shop/actions/workflows/run_tests.yml/badge.svg)
+
 # aqa_juice_shop
 
 Учебный пет-проект по автоматизации тестирования интернет-магазина
