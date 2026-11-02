@@ -28,7 +28,7 @@ jobs:
     - name: Install Juice Shop
       run: |
         git clone --depth 1 https://github.com/juice-shop/juice-shop.git
-        cd juice-shop && npm ci
+        cd juice-shop && npm install --include-workspace-root
 
     - name: Start Juice Shop
       run: |
