@@ -25,5 +25,19 @@ jobs:
     - name: Ensure browsers are installed
       run: playwright install chromium
 
+    - name: Install Juice Shop
+      run: |
+        git clone --depth 1 https://github.com/juice-shop/juice-shop.git
+        cd juice-shop && npm ci
+
+    - name: Start Juice Shop
+      run: |
+        cd juice-shop
+        nohup npm start &
+
+    - name: Wait for app to be ready
+      run: |
+        timeout 60 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 2; done'
+
     - name: Run tests in CI
-      run: pytest -k "test_github_ci_check"
+      run: pytest tests/ -v
