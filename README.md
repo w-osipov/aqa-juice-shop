@@ -1,4 +1,4 @@
-![Tests](https://github.com/w-osipov/aqa_juice_shop/actions/workflows/run_tests.yml/badge.svg)
+![Tests](https://github.com/w-osipov/aqa-juice-shop/actions/workflows/run_tests.yml/badge.svg)
 
 # aqa_juice_shop
 
