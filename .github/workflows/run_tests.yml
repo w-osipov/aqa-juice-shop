@@ -31,9 +31,7 @@ jobs:
         cd juice-shop && npm install --include-workspace-root
 
     - name: Start Juice Shop
-      run: |
-        cd juice-shop
-        nohup npm start &
+      run: docker run -d -p 3000:3000 bkimminich/juice-shop
 
     - name: Wait for app to be ready
       run: |
